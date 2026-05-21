@@ -14,7 +14,7 @@ En esta fase nos preparado los formatos de intercambio para que el ERP pueda env
 He creado dos archivos dentro de la carpeta interoperabilidad/:
 1. **invoice_export.json:** Este archivo, finalmente no se hacía en esta actividad.
 
-2. **invoice_ubl.xml:** Es una factura electrónica oficial con el estándar internacional UBL. Le he metido los namespaces obligatorios (cac y cbc) y los identificadores europeos para que rule al 100% con la red PEPPOL y no ponga pegas.
+2. **invoice_ubl.xml:** Es una factura electrónica oficial con el estándar internacional UBL. Le he metido los namespaces obligatorios (cac y cbc) y los identificadores europeos para que rule al 100% con la red PEPPOL y no ponga ninguna pega.
 
 
 ## Introducción y Arquitectura
