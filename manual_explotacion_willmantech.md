@@ -8,6 +8,15 @@ En este archivo, se hace uso de directivas de iteración como t-foreach para des
 **¿Como he realizado esta actividad?**
 Para empezar, he accedido a odoo con el fin de acceder al código de report_invoice_document. Después, he extraido las cosas importantes.
 
+## FASE 2: Interoperabilidad de Datos (Extracción JSON/XML)
+En esta fase nos preparado los formatos de intercambio para que el ERP pueda envie las facturas a aplicaciones externas. 
+
+He creado dos archivos dentro de la carpeta interoperabilidad/:
+1. **invoice_export.json:** Este archivo, finalmente no se hacía en esta actividad.
+
+2. **invoice_ubl.xml:** Es una factura electrónica oficial con el estándar internacional UBL. Le he metido los namespaces obligatorios (cac y cbc) y los identificadores europeos para que rule al 100% con la red PEPPOL y no ponga pegas.
+
+
 ## Introducción y Arquitectura
 
 ## Guía de Instalación y Reinstalación
