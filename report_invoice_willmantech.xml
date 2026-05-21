@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_willmantech_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            
+            <main class="page">
+                <section class="row mb-4">
+                    <section class="col-6">
+                        <h2 class="text-primary">Factura de Venta</h2>
+                        <address>
+                            <strong>Factura Nº:</strong> <span t-field="doc.name"/><br/>
+                            <strong>Fecha:</strong> <span t-field="doc.date"/><br/>
+                            <strong>Ref. Interna:</strong> <span t-field="doc.ref"/>
+                        </address>
+                    </section>
+                    <section class="col-6 text-end">
+                        <address>
+                            <strong>Datos del Cliente:</strong><br/>
+                            <span t-field="doc.partner_id.name"/><br/>
+                            <span t-field="doc.partner_id.street"/><br/>
+                            <span t-field="doc.partner_id.email"/>
+                        </address>
+                    </section>
+                </section>
+                
+                <t t-set="tiene_descuento" t-value="any(line.discount for line in doc.invoice_line_ids)"/>
+                
+                <section class="table-responsive mt-4">
+                    <table class="table table-sm table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-start">Descripción</th>
+                                <th scope="col" class="text-end">Cantidad</th>
+                                <th scope="col" class="text-end">Precio Unitario</th>
+                                <t t-if="tiene_descuento">
+                                    <th scope="col" class="text-end">Desc. (%)</th>
+                                </t>
+                                <th scope="col" class="text-end">Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.invoice_line_ids" t-as="line">
+                                <tr t-if="not line.display_type">
+                                    <td class="text-start"><span t-field="line.name"/></td>
+                                    <td class="text-end"><span t-field="line.quantity"/></td>
+                                    <td class="text-end"><span t-field="line.price_unit"/></td>
+                                    <t t-if="tiene_descuento">
+                                        <td class="text-end"><span t-field="line.discount"/>%</td>
+                                    </t>
+                                    <td class="text-end"><span t-field="line.price_subtotal"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </section>
+                
+                <footer class="row justify-content-end mt-4">
+                    <section class="col-5">
+                        <table class="table table-sm table-borderless border-top border-dark">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="text-start">Base Imponible:</th>
+                                    <td class="text-end"><span t-field="doc.amount_untaxed"/></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-start">IVA (Impuestos):</th>
+                                    <td class="text-end"><span t-field="doc.amount_tax"/></td>
+                                </tr>
+                                <tr class="table-active font-weight-bold" style="border-top: 2px solid #000;">
+                                    <th scope="row" class="text-start"><strong>Total Factura:</strong></th>
+                                    <td class="text-end">
+                                        <strong><span t-field="doc.amount_total"/></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </footer>
+            </main>
+        </t>
+    </template>
+    
+    <record id="action_report_invoice_willmantech" model="ir.actions.report">
+        <field name="name">Factura WillmanTech</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">willmantech.report_invoice_willmantech_document</field>
+        <field name="report_file">willmantech.report_invoice_willmantech_document</field>
+        <field name="print_report_name">'Factura_%s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
